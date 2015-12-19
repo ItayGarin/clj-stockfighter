@@ -51,69 +51,59 @@
 ;;;;;;;;;;;;;;;;;;;;; PUBLIC ;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn api-up? []
-  "Performs an API heartbeat GET request.
-   Returns a future with a boolean response"
-  (future
-    (alive? (build-api-heartbeat-url))))
+  "Performs an API heartbeat GET request."
+  (alive? (build-api-heartbeat-url)))
 
 (defn venue-up? [venue]
-  "Performs a venue heartbeat GET request.
-   Returns a future with a boolean response"
-  (future
-    (alive? (build-venue-heartbeat-url venue))))
+  "Performs a venue heartbeat GET request."
+  (alive? (build-venue-heartbeat-url venue)))
 
 (defn get-venue-stocks [venue]
   "Requests all the stocks in a venue (via GET).
-   Returns a future with a vector of stock maps -
+   Returns a vector of stock maps -
    [{:name x :symbol x} {:name y :symbol y}]"
-  (future
-    (->> (build-venue-stocks-url venue)
-         (get-n-validate)
-         (:body))))
+  (->> (build-venue-stocks-url venue)
+       (get-n-validate)
+       (:body)))
 
 (defn get-stock-quote [venue stock]
   "Requests a stock's quote (via GET).
-   Returns a future with a quote hash-map"
-  (future
-    (->> (build-stock-quote-url venue stock)
-         (get-n-validate)
-         (:body))))
+   Returns a quote hash-map"
+  (->> (build-stock-quote-url venue stock)
+       (get-n-validate)
+       (:body)))
 
 (defn get-order-status [api-key venue stock order-id]
   "Requests an order's status (via GET).
-   Returns a future with a status hash-map"
-  (future
-    (->> (build-stock-order-url venue stock (str order-id))
-         (get-n-validate api-key)
-         (:body))))
+   Returns a status hash-map"
+  (->> (build-stock-order-url venue stock (str order-id))
+       (get-n-validate api-key)
+       (:body)))
 
 (defn get-account-all-orders-status [api-key venue account]
   "Requests the status of all the orders in an account (via GET).
-   Returns a future with a vector of status hash-maps"
-  (future
-    (->> (build-account-all-orders-url venue account)
-         (get-n-validate api-key)
-         (:body))))
+   Returns a vector of status hash-maps"
+  (->> (build-account-all-orders-url venue account)
+       (get-n-validate api-key)
+       (:body)))
 
 (defn get-account-stock-orders-status [api-key venue account stock]
   "Requests the status of all the orders in an account for a particular stock (via GET).
-   Returns a future with a vector of status hash-maps"
-  (future
-    (->> (build-account-stock-orders-url venue account stock)
-         (get-n-validate api-key)
-         (:body))))
+   Returns a vector of status hash-maps"
+  (->> (build-account-stock-orders-url venue account stock)
+       (get-n-validate api-key)
+       (:body)))
 
 (defn cancel-order [api-key venue stock order-id]
   "Attempts to delete an order (via DELETEF).
-   Returns a future with the order status hash-map"
-  (future
-    (->> (build-stock-order-url venue stock (str order-id))
-         (delete-n-validate api-key)
-         (:body))))
+   Returns the order's status hash-map"
+  (->> (build-stock-order-url venue stock (str order-id))
+       (delete-n-validate api-key)
+       (:body)))
 
 (defn post-order [api-key venue stock account direction qty price orderType]
   "Attempts to post an order on a stock (via POST).
-   Returns a future with an order hash-map"
+   Returns the order's status hash-map"
   (let [url (build-stock-orders-url venue stock)
         form {:account account
               :venue venue
@@ -122,6 +112,5 @@
               :qty qty
               :direction direction
               :orderType orderType}]
-    (future
-      (:body (post-n-validate api-key url {:form-params form
-                                           :content-type :json})))))
+    (:body (post-n-validate api-key url {:form-params form
+                                         :content-type :json}))))
