@@ -94,3 +94,32 @@
   "https://api.stockfighter.io/ob/api/venues/:venue/accounts/:account/stocks/:stock/orders"
   [venue account stock]
   (build-account-url venue account "stocks" stock "orders"))
+
+;;;;;;;;;;;;;;;;;;;;;
+;; WEBSOCKETS URLs ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(defn build-ws-api-url
+  "wss://api.stockfighter.io/ob/api/ws/"
+  [& additionals]
+  (str "wss://" (apply cat-uri api-uri "ws/" additionals)))
+
+(defn build-ws-venue-tickertape-url
+  "wss://api.stockfighter.io/ob/api/ws/:trading_account/venues/:venue/tickertape"
+  [venue account & additionals]
+  (apply build-ws-api-url account "venues" venue "tickertape" additionals))
+
+(defn build-ws-stock-tickertape-url
+  "wss://api.stockfighter.io/ob/api/ws/:trading_account/venues/:venue/tickertape/stocks/:stock"
+  [venue account stock]
+  (build-ws-venue-tickertape-url venue account "stocks" stock))
+
+(defn build-ws-venue-fills-url
+  "wss://api.stockfighter.io/ob/api/ws/:trading_account/venues/:venue/executions"
+  [venue account & additionals]
+  (apply build-ws-api-url account "venues" venue "executions" additionals))
+
+(defn build-ws-stock-fills-url
+  "wss://api.stockfighter.io/ob/api/ws/:trading_account/venues/:venue/executions/stocks/:symbol"
+  [venue account stock]
+  (build-ws-venue-fills-url venue account "stocks" stock))
