@@ -1,5 +1,6 @@
 (ns stockfighter.api
-  (:require [cheshire.core :refer [parse-string]]
+  (:require [aleph.http :as a]
+            [cheshire.core :refer [parse-string]]
             [clj-http.client :as client]
             [stockfighter.url-builder :refer :all]))
 
@@ -47,6 +48,10 @@
 (defn- alive? [heartbeat-url]
   (:ok? (get-n-validate heartbeat-url)))
 
+(defn- make-ws
+  "Returns a websocket client that can be manipulated using manifold.stream API"
+  [url]
+  (deref (a/websocket-client url)))
 
 ;;;;;;;;;;;;;;;;;;;;; PUBLIC ;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -114,3 +119,23 @@
               :orderType orderType}]
     (:body (post-n-validate api-key url {:form-params form
                                          :content-type :json}))))
+
+(defn make-venue-tickertape-ws
+  "Returns a websocket client that can be manipulated using manifold.stream API"
+  [venue account]
+  (make-ws (build-ws-venue-tickertape-url venue account)))
+
+(defn make-stock-tickertape-ws
+  "Returns a websocket client that can be manipulated using manifold.stream API"
+  [venue account stock]
+  (make-ws (build-ws-stock-tickertape-url venue account stock)))
+
+(defn make-venue-fills-ws
+  "Returns a websocket client that can be manipulated using manifold.stream API"
+  [venue account & additionals]
+  (make-ws (build-ws-venue-fills-url venue account)))
+
+(defn make-stock-fills-ws
+  "Returns a websocket client that can be manipulated using manifold.stream API"
+  [venue account stock]
+  (make-ws (build-ws-stock-fills-url venue account stock)))
