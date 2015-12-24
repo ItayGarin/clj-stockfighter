@@ -7,4 +7,6 @@
                  [clj-http "2.0.0"]
                  [cheshire "5.5.0"]
                  [aleph "0.4.1-beta3"]
-                 [manifold "0.1.2-alpha1"]])
+                 [manifold "0.1.2-alpha1"]
+                 [com.stuartsierra/component "0.3.1"]
+                 [org.clojure/core.async "0.2.374"]])
