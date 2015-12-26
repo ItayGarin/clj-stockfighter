@@ -143,3 +143,19 @@
   "Returns a websocket client that can be manipulated using manifold.stream API"
   [venue account stock]
   (make-ws (build-ws-stock-fills-url venue account stock)))
+
+(defn gm-start-level [api-key level]
+  (let [url (build-gm-level-url level)]
+    (:body (post-n-validate api-key url {:content-type :json}))))
+
+(defn gm-restart-level [api-key instance]
+  (let [url (build-gm-instance-restart-url instance)]
+    (:body (post-n-validate api-key url {:content-type :json}))))
+
+(defn gm-stop-level [api-key instance]
+  (let [url (build-gm-instance-stop-url instance)]
+    (:body (post-n-validate api-key url {:content-type :json}))))
+
+(defn gm-resume-level [api-key instance]
+  (let [url (build-gm-instance-resume-url instance)]
+    (:body (post-n-validate api-key url {:content-type :json}))))

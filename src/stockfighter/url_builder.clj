@@ -6,6 +6,7 @@
 ;;;;;;;;;;;;;
 
 (def ^:private api-uri "api.stockfighter.io/ob/api/")
+(def ^:private gm-uri "www.stockfighter.io/gm")
 
 (defn- remove-dup-slashes [s]
   (s/replace s #"/+" "/"))
@@ -123,3 +124,37 @@
   "wss://api.stockfighter.io/ob/api/ws/:trading_account/venues/:venue/executions/stocks/:symbol"
   [venue account stock]
   (build-ws-venue-fills-url venue account "stocks" stock))
+
+;;;;;;;;;;;;;;;;;;;;;
+;; GAMEMASTER URLs ;;
+;;;;;;;;;;;;;;;;;;;;;
+
+(defn build-gm-api-url
+  "https://www.stockfighter.io/gm/"
+  [& additionals]
+  (str "https://" (apply cat-uri gm-uri additionals)))
+
+(defn build-gm-level-url
+  "https://www.stockfighter.io/gm/levels/:level"
+  [level]
+  (build-gm-api-url "levels" level))
+
+(defn build-gm-instance-url
+  "https://www.stockfighter.io/gm/instances/:instance"
+  [instance & additionals]
+  (apply build-gm-api-url "instances" instance additionals))
+
+(defn build-gm-instance-restart-url
+  "https://www.stockfighter.io/gm/instances/:instance/restart"
+  [instance]
+  (build-gm-instance-url instance "restart"))
+
+(defn build-gm-instance-stop-url
+  "https://www.stockfighter.io/gm/instances/:instance/stop"
+  [instance]
+  (build-gm-instance-url instance "stop"))
+
+(defn build-gm-instance-resume-url
+  "https://www.stockfighter.io/gm/instances/:instance/resume"
+  [instance]
+  (build-gm-instance-url instance "resume"))
