@@ -99,25 +99,29 @@
        (get-n-validate api-key)
        (:body)))
 
-(defn cancel-order [api-key venue stock order-id]
+(defn cancel-order [api-key {:keys [venue stock id]}]
   "Attempts to delete an order (via DELETEF).
    Returns the order's status hash-map"
-  (->> (build-stock-order-url venue stock (str order-id))
+  (->> (build-stock-order-url venue stock (str id))
        (delete-n-validate api-key)
        (:body)))
 
-(defn post-order [api-key venue stock account direction qty price orderType]
+(defn make-order
+  "Creates an order hash-map that's compatible with (post-order)"
+  [venue stock account direction qty price orderType]
+  {:account account
+   :venue venue
+   :stock stock
+   :price price
+   :qty qty
+   :direction direction
+   :orderType orderType})
+
+(defn post-order [api-key {:keys [venue stock] :as order}]
   "Attempts to post an order on a stock (via POST).
    Returns the order's status hash-map"
-  (let [url (build-stock-orders-url venue stock)
-        form {:account account
-              :venue venue
-              :stock stock
-              :price price
-              :qty qty
-              :direction direction
-              :orderType orderType}]
-    (:body (post-n-validate api-key url {:form-params form
+  (let [url (build-stock-orders-url venue stock)]
+    (:body (post-n-validate api-key url {:form-params order
                                          :content-type :json}))))
 
 (defn make-venue-tickertape-ws
