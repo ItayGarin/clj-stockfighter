@@ -4,8 +4,8 @@
 
 __clj-stockfighter__ provides an easy-to-use wrapping for [Stockfighter](https://www.stockfighter.io/)'s API.
 
-I've set out to build this in Clojure as a part in my on going journey of learning this wonderful language.  
-Thus, any feedback and contributions are more then welcome :)
+I've set out to build this in Clojure as a part in my ongoing journey of learning this wonderful language.  
+Thus, any feedback and contributions are more than welcome :)
 
 This library uses the MIT license => You can (and should!) go wild with this.
 
@@ -19,8 +19,11 @@ This library uses the MIT license => You can (and should!) go wild with this.
 - [Getting the Orderbook for a stock](#get-order-status)
 - [Post/Cancel an Order](#post-cancel-order)
 - [Websocket API](#websocket-api)
-- [Game-Master API](#game-master-api)
+- [Game-Master API](#gamemaster-api)
+- [Contribution / Contact](#contrib)
+- [License](#license)
 
+<div id='api-venue-up'/>
 ### API/Venue Up? (Heartbeat)
 
 This is how you check if Stockfighter's API is up.  
@@ -43,6 +46,7 @@ __Reference__ - [Venue Heartbeat](https://starfighter.readme.io/docs/venue-healt
 ;; => true
 ```
 
+<div id='get-venue-stocks'/>
 ### Getting The Symbols of a Venue's Stocks
 
 Pretty self-explanatory.  
@@ -60,6 +64,7 @@ __Reference__ - [Stocks on a Venue](https://starfighter.readme.io/docs/list-stoc
    :symbol "FOOBAR"}]}
 ```
 
+<div id='get-stock-quote'/>
 ### Getting a Quote for a stock
 
 This returns a quote for a given stock in a venue.
@@ -85,6 +90,7 @@ This returns a quote for a given stock in a venue.
  }
 ```
 
+<div id='get-order-status'/>
 ### Getting the Orderbook for a stock
 
 There are 3 different methods of obtaining the status of our orders ("Orderbook").
@@ -124,6 +130,8 @@ __Reference__ - [The Orderbook for a Stock](https://starfighter.readme.io/docs/g
    :price 1000,
    :direction "buy"}]}
 ```
+
+<div id='post-cancel-order'/>
 ## Post/Cancel an Order
 
 Here I'll explain how to post a new order and cancel a pending one.  
@@ -167,6 +175,7 @@ __Reference__ - [Cancel An Order](https://starfighter.readme.io/docs/cancel-an-o
 (cancel-order api-key (assoc my-order :id "13646"))
 ```
 
+<div id='websocket-api'/>
 ## Websocket API
 
 Once you feel comfortable with the above API you may want 
@@ -178,6 +187,7 @@ Here a few examples how to create and utilize these websockets.
 Notice, that you don't need to provide an api-key to create these sockets.
 
 __Reference__ - [Quotes (Ticker Tape) Websockets](https://starfighter.readme.io/docs/quotes-ticker-tape-websocket)
+
 __Reference__ - [Executions (Fills) Websockets](https://starfighter.readme.io/docs/executions-fills-websocket)
 
 ```Clojure
@@ -191,6 +201,7 @@ __Reference__ - [Executions (Fills) Websockets](https://starfighter.readme.io/do
     @(manifold.stream/take! websocket))
 ```
 
+<div id='gamemaster-api'/>
 ## Game-Master API
 
 The GM API is intended to serve those of you who are -
@@ -209,12 +220,14 @@ __Reference__ - [The GM API](https://discuss.starfighters.io/t/the-gm-api-how-to
 (defn gm-resume-level [api-key instance])
 ```
 
+<div id='contrib'/>
 ## Contribution / Contact
 
 Like I said I'd love to hear any feedback or input you might have.  
 Feel free to submit a Pull Request or contact me at -  
 thifixp@gmail.com
 
+<div id='license'/>
 ## License
 
 The MIT License (MIT)
