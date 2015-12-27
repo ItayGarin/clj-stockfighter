@@ -66,7 +66,7 @@ Once again, this will perform a GET heartbeat request.
 __Reference__ - [Venue Heartbeat](https://starfighter.readme.io/docs/venue-healthcheck)
 
 ```Clojure
-(defn venue-up? [venue])
+(venue-up? "TESTEX")
 ;; => true
 ```
 
