@@ -1,5 +1,7 @@
 # clj-stockfighter
 
+[![Clojars Project](http://clojars.org/clj-stockfighter/latest-version.svg)](http://clojars.org/clj-stockfighter)
+
 ## Overview
 
 __clj-stockfighter__ provides an easy-to-use wrapping for [Stockfighter](https://www.stockfighter.io/)'s API.
@@ -7,12 +9,15 @@ __clj-stockfighter__ provides an easy-to-use wrapping for [Stockfighter](https:/
 I've set out to build this in Clojure as a part in my ongoing journey of learning this wonderful language.  
 Thus, any feedback and contributions are more than welcome :)
 
+I hope this lib will aid you in the quest of becoming the best stock fighter!
+
 This library uses the MIT license => You can (and should!) go wild with this.
 
 ## Usage
 
 ### Table of Contents
 
+- [How to Use in Your Project](#require)
 - [API/Venue Up? (Heartbeat)](#api-venue-up)
 - [Getting The Symbols of a Venue's Stocks](#get-venue-stocks)
 - [Getting a Quote for a stock](#get-stock-quote)
@@ -22,6 +27,25 @@ This library uses the MIT license => You can (and should!) go wild with this.
 - [Game-Master API](#gamemaster-api)
 - [Contribution / Contact](#contrib)
 - [License](#license)
+
+<div id='require'/>
+### How to Use in Your Project
+
+Add __clj-stockfighter__ to your lein project is easy as pie!  
+Simply add `[clj-stockfighter "0.1.0-SNAPSHOT"]` to the `:dependencies` vector in your `project.clj`.
+
+This might look like this -
+
+```Clojure
+:dependencies [[org.clojure/clojure "1.7.0"]
+                [clj-stockfighter "0.1.0-SNAPSHOT"]]
+```
+
+Then, you could use it in your source files like so -
+```Clojure
+(ns solution-lvl1
+  (:require [clj-stockfighter.api :as api]))
+```
 
 <div id='api-venue-up'/>
 ### API/Venue Up? (Heartbeat)
